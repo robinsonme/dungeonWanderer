@@ -1,0 +1,85 @@
+<template name="main">
+	{{> navigation}}
+	{{#if currentUser}}
+		<div class="row">
+			<h2 align="center" class="col-md-12">Welcome {{currentUser.username}}!</h2>
+		</div>
+	{{else}}
+		<div class="row">
+			<h2 align="center" class="col-md-12">Welcome to Dungeon Wanderer!</h2>
+		</div>
+	{{/if}}
+	{{> yield}}
+	<hr />
+	<p align="center" class="col-md-12">Copyright &copy; Dungeon Wanderer, 2015.</p>
+</template>
+
+<template name="navigation">
+	<nav class="navbar navbar-inverse">
+		<div class="container-fluid">
+			<!--
+			<div class="navbar-header">
+        		{{> navBrand}}
+			</div>
+			-->
+			<div>
+				<ul class="nav navbar-nav">
+					{{> navItems}}
+				</ul>
+				<ul class="nav navbar-nav navbar-right">
+					{{> navItemsRight}}
+				</ul>
+			</div>
+		</div>
+	</nav>
+</template>
+
+<template name="navBrand">
+	<a class="navbar-brand" href="{{pathFor route='home' }}">Dungeon Wanderer</a>
+</template>
+
+<template name="navItems">
+	<li class="{{ activeIfTemplateIs 'home' }}"><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+	<li class="{{ activeIfTemplateIs 'about' }}"><a href="{{pathFor route='about'}}">About</a></li>
+	<li class="{{ activeIfTemplateIs 'contact' }}"><a href="{{pathFor route='contact'}}">Contact Us</a></li>
+</template>
+
+<template name="navItemsRight">
+	{{#if currentUser}}
+		<li><a href="#" class="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
+	{{else}}
+		<li class="{{ activeIfTemplateIs 'register' }}"><a href="{{pathFor route='register'}}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
+		<li class="{{ activeIfTemplateIs 'login' }}"><a href="{{pathFor route='login'}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
+	{{/if}}
+</template>
+
+<template name="home">
+</template>
+
+<template name="about">
+</template>
+
+<template name="contact">
+</template>
+
+<template name="login">
+	<h2>Login</h2>
+    <form class="login">
+        <p>Email: <input type="email" name="email"></p>
+        <p>Password: <input type="password" name="password"></p>
+        <p><input type="submit" value="Login"></p>
+    </form>
+</template>
+
+<template name="register">
+	<h2>Register</h2>
+    <form class="register">
+        <p>Email: <input type="email" name="email"></p>
+        <p>Password: <input type="password" name="password"></p>
+        <p>Username: <input type="text" name="username"></p>
+        <p><input type="submit" value="Register"></p>
+    </form>
+</template>
+
+<template name="logout">
+</template>
