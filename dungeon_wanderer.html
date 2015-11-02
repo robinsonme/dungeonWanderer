@@ -4,13 +4,16 @@
 		<div class="row">
 			<h2 align="center" class="col-md-12">Welcome {{currentUser.username}}!</h2>
 		</div>
+		{{> navLeftSide}}
 	{{else}}
 		<div class="row">
 			<h2 align="center" class="col-md-12">Welcome to Dungeon Wanderer!</h2>
 		</div>
 	{{/if}}
 	{{> yield}}
-	<hr />
+
+	<br />
+	<hr class="col-md-12" />
 	<p align="center" class="col-md-12">Copyright &copy; Dungeon Wanderer, 2015.</p>
 </template>
 
@@ -45,45 +48,107 @@
 </template>
 
 <template name="navLeftSide">
-	<div class="col-md-3">
+	<div class="leftSideNav col-md-3">
   		<ul class="nav nav-pills nav-stacked">
-    		<li><a href="#">Menu 1</a></li>
-    		<li><a href="#">Menu 2</a></li>
-    		<li><a href="#">Menu 3</a></li>
+    		<li class="{{ activeIfTemplateIs 'profile' }}"><a href="{{pathFor route='profile'}}">Profile</a></li>
+    		<li class="{{ activeIfTemplateIs 'inventory' }}"><a href="{{pathFor route='inventory'}}">Inventory</a></li>
+    		<li class="{{ activeIfTemplateIs 'abilities' }}"><a href="{{pathFor route='abilities'}}">Abilities</a></li>
+    		<li class="{{ activeIfTemplateIs 'companions' }}"><a href="{{pathFor route='companions'}}">Companions</a></li>
   		</ul>
 	</div>
 </template>
 
+<template name="profile">
+	<form class="form-horizontal col-md-9" role="form">
+		<div class="form-group">
+			<label class="control-label col-md-2 col-md-offset-1">Email:</label>
+        	<input type="text" value="{{currentUser.email}}" name="profileItem">
+    	</div>
+    	
+    	<div class="form-group">
+    		<label class="control-label col-md-2 col-md-offset-1">Username:</label>
+    		<input type="text" value="{{currentUser.username}}" name="profileItem">
+	    </div>
+	</form>
+</template>
+
+
+<template name="inventory">
+</template>
+
+<template name="abilities">
+</template>
+
+<template name="companions">
+</template>
+
+
 <template name="home">
 	{{#if currentUser}}
-		{{> navLeftSide}}
+		<h4 class="col-md-9">Get to work soldier!</h4>
 	{{else}}
 		<h4 class="col-md-12" align="center">Login to play!</h4>
+
 	{{/if}}
 </template>
 
 <template name="about">
+	<p class="col-md-9">We are epic developer.</p>
 </template>
 
 <template name="contact">
+	<p class="col-md-9">Email us at notyet@notyet.com</p>
 </template>
 
 <template name="login">
-	<h2>Login</h2>
-    <form class="login">
-        <p>Username: <input type="text" name="username"></p>
-        <p>Password: <input type="password" name="password"></p>
-        <p><input type="submit" value="Login"></p>
+	<h2 class="col-md-offset-2 col-md-10">Login</h2>
+    <form class="login form-horizontal" role="form">
+    	<div class="form-group">
+	        <label class="control-label col-md-2">Username: </label>
+        	<div class="col-md-8">
+        		<input type="text" class="form-control" placeholder="Enter username" name="username">
+    		</div>
+    	</div>
+    	<div class="form-group">
+	        <label class="control-label col-md-2">Password: </label>
+        	<div class="col-md-8">
+        		<input type="password" class="form-control" placeholder="Enter password" name="password">
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<div class="col-md-offset-2 col-md-10">
+    			<button type="submit" class="btn btn-default">Login</button>
+    		</div>
+    	</div>
     </form>
 </template>
 
 <template name="register">
-	<h2>Register</h2>
-    <form class="register">
-        <p>Email: <input type="email" name="email"></p>
-        <p>Username: <input type="text" name="username"></p>
-        <p>Password: <input type="password" name="password"></p>
-        <p><input type="submit" value="Register"></p>
+	<h2 class="col-md-offset-2 col-md-10">Register</h2>
+	<form class="register form-horizontal" role="form">
+    	<div class="form-group">
+	        <label class="control-label col-md-2">Email: </label>
+        	<div class="col-md-8">
+        		<input type="email" class="form-control" placeholder="Enter email" name="email">
+    		</div>
+    	</div>
+    	<div class="form-group">
+	        <label class="control-label col-md-2">Username: </label>
+        	<div class="col-md-8">
+        		<input type="text" class="form-control" placeholder="Enter username" name="username">
+    		</div>
+    	</div>
+    	<div class="form-group">
+	        <label class="control-label col-md-2">Password: </label>
+        	<div class="col-md-8">
+        		<input type="password" class="form-control" placeholder="Enter password" name="password">
+    		</div>
+    	</div>
+    	<div class="form-group">
+    		<div class="col-md-offset-2 col-md-10">
+    			<button type="submit" class="btn btn-default">Register</button>
+    		</div>
+    	</div>
     </form>
 </template>
 

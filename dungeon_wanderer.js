@@ -7,6 +7,26 @@ Router.route('/', {
   template: 'home'
 });
 
+Router.route('/profile', {
+  name: 'profile',
+  template: 'profile'
+});
+
+Router.route('/inventory', {
+  name: 'inventory',
+  template: 'inventory'
+});
+
+Router.route('/abilities', {
+  name: 'abilities',
+  template: 'abilities'
+});
+
+Router.route('/companions', {
+  name: 'companions',
+  template: 'companions'
+});
+
 Router.route('/about', {
   name: 'about',
   template: 'about'
@@ -38,6 +58,14 @@ if (Meteor.isClient) {
   });
 
   Template.navTopRight.helpers({
+    'activeIfTemplateIs': function(template) {
+      var currentRoute = Router.current();
+      return currentRoute &&
+        template === currentRoute.lookupTemplate() ? 'active' : '';
+    }
+  });
+
+  Template.navLeftSide.helpers({
     'activeIfTemplateIs': function(template) {
       var currentRoute = Router.current();
       return currentRoute &&
