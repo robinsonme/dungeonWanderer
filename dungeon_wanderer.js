@@ -28,7 +28,8 @@ Router.route('/login', {
 });
 
 if (Meteor.isClient) {
-  Template.navItems.helpers({
+
+  Template.navTopLeft.helpers({
     'activeIfTemplateIs': function(template) {
       var currentRoute = Router.current();
       return currentRoute &&
@@ -36,7 +37,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.navItemsRight.helpers({
+  Template.navTopRight.helpers({
     'activeIfTemplateIs': function(template) {
       var currentRoute = Router.current();
       return currentRoute &&
@@ -47,9 +48,9 @@ if (Meteor.isClient) {
   Template.login.events({
     'submit form': function(event){
       event.preventDefault();
-      var email = $('[name=email]').val();
-      var password = $('[password=password]').val();
-      Meteor.loginWithPassword(email, password, function(error){
+      var username = $('[name=username]').val();
+      var password = $('[name=password]').val();
+      Meteor.loginWithPassword(username, password, function(error){
         if(error){
           console.log(error.reason);
         } else {
@@ -59,7 +60,7 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.navItemsRight.events({
+  Template.navTopRight.events({
     'click .logout': function(event){
       event.preventDefault();
       Meteor.logout();
@@ -68,15 +69,15 @@ if (Meteor.isClient) {
   });
 
   Template.register.events({
-    'submit form': function(){
+    'submit form': function(event){
       event.preventDefault();
       var email = $('[name=email]').val();
-      var password = $('[name=password]').val();
       var username = $('[name=username]').val();
+      var password = $('[name=password]').val();
       Accounts.createUser({
         email: email,
+        username: username,
         password: password,
-        username: username
       }, function(error){
         if(error){
           console.log(error.reason);

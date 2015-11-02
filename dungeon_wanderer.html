@@ -17,34 +17,25 @@
 <template name="navigation">
 	<nav class="navbar navbar-inverse">
 		<div class="container-fluid">
-			<!--
-			<div class="navbar-header">
-        		{{> navBrand}}
-			</div>
-			-->
 			<div>
 				<ul class="nav navbar-nav">
-					{{> navItems}}
+					{{> navTopLeft}}
 				</ul>
 				<ul class="nav navbar-nav navbar-right">
-					{{> navItemsRight}}
+					{{> navTopRight}}
 				</ul>
 			</div>
 		</div>
 	</nav>
 </template>
 
-<template name="navBrand">
-	<a class="navbar-brand" href="{{pathFor route='home' }}">Dungeon Wanderer</a>
-</template>
-
-<template name="navItems">
+<template name="navTopLeft">
 	<li class="{{ activeIfTemplateIs 'home' }}"><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
 	<li class="{{ activeIfTemplateIs 'about' }}"><a href="{{pathFor route='about'}}">About</a></li>
 	<li class="{{ activeIfTemplateIs 'contact' }}"><a href="{{pathFor route='contact'}}">Contact Us</a></li>
 </template>
 
-<template name="navItemsRight">
+<template name="navTopRight">
 	{{#if currentUser}}
 		<li><a href="#" class="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
 	{{else}}
@@ -53,7 +44,22 @@
 	{{/if}}
 </template>
 
+<template name="navLeftSide">
+	<div class="col-md-3">
+  		<ul class="nav nav-pills nav-stacked">
+    		<li><a href="#">Menu 1</a></li>
+    		<li><a href="#">Menu 2</a></li>
+    		<li><a href="#">Menu 3</a></li>
+  		</ul>
+	</div>
+</template>
+
 <template name="home">
+	{{#if currentUser}}
+		{{> navLeftSide}}
+	{{else}}
+		<h4 class="col-md-12" align="center">Login to play!</h4>
+	{{/if}}
 </template>
 
 <template name="about">
@@ -65,7 +71,7 @@
 <template name="login">
 	<h2>Login</h2>
     <form class="login">
-        <p>Email: <input type="email" name="email"></p>
+        <p>Username: <input type="text" name="username"></p>
         <p>Password: <input type="password" name="password"></p>
         <p><input type="submit" value="Login"></p>
     </form>
@@ -75,8 +81,8 @@
 	<h2>Register</h2>
     <form class="register">
         <p>Email: <input type="email" name="email"></p>
-        <p>Password: <input type="password" name="password"></p>
         <p>Username: <input type="text" name="username"></p>
+        <p>Password: <input type="password" name="password"></p>
         <p><input type="submit" value="Register"></p>
     </form>
 </template>

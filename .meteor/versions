@@ -1,6 +1,5 @@
 accounts-base@1.2.2
 accounts-password@1.1.4
-autopublish@1.0.4
 autoupdate@1.2.4
 babel-compiler@5.8.24_1
 babel-runtime@0.1.4
@@ -33,7 +32,6 @@ html-tools@1.0.5
 htmljs@1.0.5
 http@1.1.1
 id-map@1.0.4
-insecure@1.0.4
 iron:controller@1.0.12
 iron:core@1.0.11
 iron:dynamic-template@1.0.12
@@ -76,6 +74,7 @@ srp@1.0.4
 standard-minifiers@1.0.2
 templating@1.1.5
 templating-tools@1.0.0
+themeteorchef:jquery-validation@1.14.0
 tracker@1.0.9
 twbs:bootstrap@3.3.5
 ui@1.0.8
