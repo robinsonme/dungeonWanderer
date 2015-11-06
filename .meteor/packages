@@ -20,3 +20,4 @@ accounts-password
 iron:router
 twbs:bootstrap
 themeteorchef:jquery-validation
+ian:accounts-ui-bootstrap-3

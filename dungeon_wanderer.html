@@ -39,18 +39,13 @@
 </template>
 
 <template name="navTopRight">
-	{{#if currentUser}}
-		<li><a href="#" class="logout"><span class="glyphicon glyphicon-log-out"></span> Logout</a></li>
-	{{else}}
-		<li class="{{ activeIfTemplateIs 'register' }}"><a href="{{pathFor route='register'}}"><span class="glyphicon glyphicon-user"></span> Register</a></li>
-		<li class="{{ activeIfTemplateIs 'login' }}"><a href="{{pathFor route='login'}}"><span class="glyphicon glyphicon-log-in"></span> Login</a></li>
-	{{/if}}
+	{{> loginButtons}}
 </template>
 
 <template name="navLeftSide">
 	<div class="leftSideNav col-md-3">
   		<ul class="nav nav-pills nav-stacked">
-    		<li class="{{ activeIfTemplateIs 'profile' }}"><a href="{{pathFor route='profile'}}">Profile</a></li>
+  			<li class="{{ activeIfTemplateIs 'character' }}"><a href="{{pathFor route='character'}}">Character</a></li>
     		<li class="{{ activeIfTemplateIs 'inventory' }}"><a href="{{pathFor route='inventory'}}">Inventory</a></li>
     		<li class="{{ activeIfTemplateIs 'abilities' }}"><a href="{{pathFor route='abilities'}}">Abilities</a></li>
     		<li class="{{ activeIfTemplateIs 'companions' }}"><a href="{{pathFor route='companions'}}">Companions</a></li>
@@ -58,46 +53,40 @@
 	</div>
 </template>
 
-<template name="profile">
-	<form class="form-horizontal col-md-9" role="form">
-		<div class="form-group updateEmail">
-			<label class="control-label col-md-2 col-md-offset-1">Email:</label>
-        	<input type="text" value="{{currentUser.emails.[0].address}}" name="profileItem">
-        	<div>
-        		<button type="submit" class="btn btn-default">Update</button>
-    		</div>
-    	</div>
-    	
-    	<div class="form-group updateUsername">
-    		<label class="control-label col-md-2 col-md-offset-1">Username:</label>
-    		<input type="text" value="{{currentUser.username}}" name="profileItem">
-    		<div>
-    			<button type="submit" class="btn btn-default">Update</button>
-    		</div>
-	    </div>
-
-	    <form class="form-horizontal updatePassword" role="form">
-	    	<div class="form-group">
-	    		<label class="control-label col-md-2 col-md-offset-1">Current Password:</label>
-	    		<input type="text" value="" name="profileItemPass1">
-	    	</div>
-	    	<div class="form-group">
-	    		<label class="control-label col-md-2 col-md-offset-1">New Password:</label>
-	    		<input type="text" value="" name="profileItemPass2">
-    		</div>
-    		<div class="form-group">
-	    		<label class="control-label col-md-2 col-md-offset-1">Verify New Password:</label>
-	    		<input type="text" value="" name="profileItemPass3">
-	    		<div>
-    				<button type="submit" class="btn btn-default updatePassword">Update</button>
-				</div>
-    		</div>
-	    </form>
-	</form>
+<template name="character">
+	<dl class="stats col-md-4">
+		<dt>Stats:</dt>
+		<dd class="col-md-offset-1">Health: {{stats.health}}</dd>
+		<dd class="col-md-offset-1">Mana: {{stats.mana}}</dd>
+		<dd class="col-md-offset-1">Currency: {{stats.currency}}</dd>
+		<dd class="col-md-offset-1">Experience: {{stats.experience}}</dd>
+		<dd class="col-md-offset-1">Level: {{stats.level}}</dd>
+		<dd class="col-md-offset-1">Experience to Next Level: {{stats.toNextLevel}}</dd>
+	</dl>
+	<dl class="equipped col-md-4">
+		<dt>Equipped Items:</dt>
+		<dd class="helm col-md-offset-1">Helm: {{equipped.helm}}</dd>
+		<dd class="neck col-md-offset-1">Neck: {{equipped.neck}}</dd>
+		<dd class="mainHand col-md-offset-1">Main Hand: {{equipped.mainHand}}</dd>
+		<dd class="offHand col-md-offset-1">offHand: {{equipped.offHand}}</dd>
+		<dd class="rRing col-md-offset-1">Right Ring: {{equipped.rRing}}</dd>
+		<dd class="lRing col-md-offset-1">Left Ring: {{equipped.lRing}}</dd>
+		<dd class="gloves col-md-offset-1">Gloves: {{equipped.gloves}}</dd>
+		<dd class="chest col-md-offset-1">Chest: {{equipped.chest}}</dd>
+		<dd class="belt col-md-offset-1">Belt: {{equipped.Belt}}</dd>
+		<dd class="leggings col-md-offset-1">Leggings: {{equipped.leggings}}</dd>
+		<dd class="boots col-md-offset-1">Boots: {{equipped.boots}}</dd>
+		<dd class="potionOne col-md-offset-1">Potion 1: {{equipped.potionOne}}</dd>
+		<dd class="potionTwo col-md-offset-1">Potion 2: {{equipped.potionTwo}}</dd>
+		<dd class="potionThree col-md-offset-1">Potion 3: {{equipped.potionThree}}</dd>
+		<dd class="potionFour col-md-offset-1">Potion 4: {{equipped.potionFour}}</dd>
+		<dd class="potionFive col-md-offset-1">Potion 5: {{equipped.potionFive}}</dd>
+	</dl>
 </template>
 
-
 <template name="inventory">
+	<ul class="items">
+	</ul>
 </template>
 
 <template name="abilities">

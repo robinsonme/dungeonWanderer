@@ -7,9 +7,9 @@ Router.route('/', {
   template: 'home'
 });
 
-Router.route('/profile', {
-  name: 'profile',
-  template: 'profile'
+Router.route('/character', {
+  name: 'character',
+  template: 'character'
 });
 
 Router.route('/inventory', {
@@ -115,10 +115,13 @@ if (Meteor.isClient) {
       });
     }
   });
+
 }
 
-if (Meteor.isServer) {
-  Meteor.startup(function () {
-    // code to run on server at startup
+if (Meteor.isClient) {
+  Meteor.methods({
+    'createCharacter': function(){
+      
+    }
   });
 }
