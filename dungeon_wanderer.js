@@ -7,24 +7,45 @@ Router.route('/', {
   template: 'home'
 });
 
-Router.route('/character', {
+Router.route('/characters', {
+  name: 'characters',
+  template: 'characters'
+});
+
+Router.route('/character/:_id', {
   name: 'character',
-  template: 'character'
+  template: 'character',
+  data: function(){
+    var currentCharacter = this.params._id;
+    return Characters.findOne({ _id: currentCharacter });
+  }
 });
 
-Router.route('/inventory', {
+Router.route('/character/:_id/inventory', {
   name: 'inventory',
-  template: 'inventory'
+  template: 'inventory',
+  data: function(){
+    var currentCharacter = this.params._id;
+    return Characters.findOne({ _id: currentCharacter });
+  }
 });
 
-Router.route('/abilities', {
+Router.route('/character/:_id/abilities', {
   name: 'abilities',
-  template: 'abilities'
+  template: 'abilities',
+  data: function(){
+    var currentCharacter = this.params._id;
+    return Characters.findOne({ _id: currentCharacter });
+  }
 });
 
-Router.route('/companions', {
+Router.route('/character/:_id/companions', {
   name: 'companions',
-  template: 'companions'
+  template: 'companions',
+  data: function(){
+    var currentCharacter = this.params._id;
+    return Characters.findOne({ _id: currentCharacter });
+  }
 });
 
 Router.route('/about', {
@@ -37,17 +58,45 @@ Router.route('/contact', {
   template: 'contact'
 });
 
-Router.route('/register', {
-  name: 'register',
-  template: 'register'
-});
-
-Router.route('/login', {
-  name: 'login',
-  template: 'login'
-});
+Characters = new Meteor.Collection('characters');
 
 if (Meteor.isClient) {
+  Accounts.ui.config({
+    passwordSignupFields: 'USERNAME_AND_EMAIL'
+  });
+
+  Template.createCharacter.events({
+    'submit form': function(event){
+      event.preventDefault();
+      var characterName = $('[name=characterName]').val();
+      var currentUser = Meteor.userId();
+      Characters.insert({
+        name: characterName,
+        createdBy: currentUser,
+        createdAt: new Date(),
+        level: 1
+      }, function(error, results) {
+        $('[name="characterName"]').val('');
+        $('#createCharacter').on('hidden.bs.modal', function() {
+            Router.go('character', { _id: results });
+          });
+        $('#createCharacter').modal('hide');
+      });
+      
+    }
+  });
+
+  Template.characters.events({
+    'click .delete-character': function(event){
+      event.preventDefault();
+      var currentUser = Meteor.userId();
+      var documentID = this._id;
+      var confirm = window.confirm("Delete this character permenantly?");
+      if(confirm){
+        Characters.remove({ _id: documentID });
+      }
+    }
+  })
 
   Template.navTopLeft.helpers({
     'activeIfTemplateIs': function(template) {
@@ -73,55 +122,34 @@ if (Meteor.isClient) {
     }
   });
 
-  Template.login.events({
-    'submit form': function(event){
-      event.preventDefault();
-      var username = $('[name=username]').val();
-      var password = $('[name=password]').val();
-      Meteor.loginWithPassword(username, password, function(error){
-        if(error){
-          console.log(error.reason);
-        } else {
-          Router.go("home");
-        }
-      });
+  Template.characters.helpers({
+    'character': function(){
+      var currentUser = Meteor.userId();
+      return Characters.find({ createdBy: currentUser }, {sort: {name: 1}});
+    },
+    'maxCharactersReached': function(){
+      var currentUser = Meteor.userId();
+      var numChars = Characters.find({ createdBy: currentUser }).count();
+      if(numChars >= 10) {
+        return false;
+      } else {
+        return true;
+      }
     }
   });
 
-  Template.navTopRight.events({
-    'click .logout': function(event){
-      event.preventDefault();
-      Meteor.logout();
-      Router.go('login');
+  Template.characterCount.helpers({
+    'totalCharacters': function(){
+      var currentUser = Meteor.userId();
+      return Characters.find({ createdBy: currentUser }).count();
+    },
+    'maxCharacters': function(){
+      var currentUser = Meteor.userId();
+      // Setup for a later max number of characters and a way to increase that.
     }
   });
-
-  Template.register.events({
-    'submit form': function(event){
-      event.preventDefault();
-      var email = $('[name=email]').val();
-      var username = $('[name=username]').val();
-      var password = $('[name=password]').val();
-      Accounts.createUser({
-        email: email,
-        username: username,
-        password: password,
-      }, function(error){
-        if(error){
-          console.log(error.reason);
-        } else {
-          Router.go('home');
-        }
-      });
-    }
-  });
-
 }
 
 if (Meteor.isClient) {
-  Meteor.methods({
-    'createCharacter': function(){
-      
-    }
-  });
+  
 }
