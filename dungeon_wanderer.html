@@ -75,7 +75,7 @@
 <template name="createCharacter">
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createCharacter">Create Character</button>
 	<div id="createCharacter" class="modal fade" role="dialog">
-			<div class="modal-dialog">
+			<div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -83,12 +83,20 @@
 		      </div>
 		      <form class="form-horizontal" role="form">
 		      	<div class="modal-body">
-		        
 			    	<div class="form-group">
 				        <label class="control-label col-md-2">Character Name: </label>
-			        	<div class="col-md-8">
+			        	<div class="col-md-6">
 			        		<input type="text" class="form-control" placeholder="Enter character name" name="characterName">
 			    		</div>
+			    	</div>
+			    	<div class="form-group">
+			    		<label for="race">Race:</label>
+			    		<select class="form-control" id="race">
+			    			<option>Human</option>
+			    			<option>Elf</option>
+			    			<option>Dwarf</option>
+			    			<option>Gnome</option>
+			    		</select>
 			    	</div>
 		      	</div>
 			    <div class="modal-footer">
@@ -112,9 +120,10 @@
 <template name="statsTemp">
 	<dl class="stats col-md-4">
 		<dt>Stats:</dt>
-		<dd class="col-md-offset-1">Level: {{stats.level}}</dd>
+		<dd class="col-md-offset-1">Level: {{characters.level}}</dd>
 		<dd class="col-md-offset-1">Experience: {{stats.experience}}</dd>
 		<dd class="col-md-offset-1">Experience to Next Level: {{stats.toNextLevel}}</dd>
+		<dd class="col-md-offset-1">Race: {{characters.race}}</dd>
 		<dd class="col-md-offset-1">Health: {{stats.health}}</dd>
 		<dd class="col-md-offset-1">Mana: {{stats.mana}}</dd>
 		<dd class="col-md-offset-1">Currency: {{stats.currency}}</dd>

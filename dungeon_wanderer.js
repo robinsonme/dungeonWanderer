@@ -77,6 +77,7 @@ if (Meteor.isClient) {
         level: 1
       }, function(error, results) {
         $('[name="characterName"]').val('');
+        $('[name=race]').val(1);
         $('#createCharacter').on('hidden.bs.modal', function() {
             Router.go('character', { _id: results });
           });
