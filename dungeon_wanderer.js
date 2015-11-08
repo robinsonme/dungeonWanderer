@@ -69,15 +69,32 @@ if (Meteor.isClient) {
     'submit form': function(event){
       event.preventDefault();
       var characterName = $('[name=characterName]').val();
+      var race = $('[name=race]').val();
       var currentUser = Meteor.userId();
+      switch(race) {
+        case 0:
+        default:
+          var raceName = "Human";
+          break;
+        case 1:
+          var raceName = "Elf";
+          break;
+        case 2: 
+          var raceName = "Dwarf";
+          break;
+        case 3: 
+          var raceName = "Gnome";
+          break;
+      };
       Characters.insert({
         name: characterName,
         createdBy: currentUser,
         createdAt: new Date(),
-        level: 1
+        level: 1,
+        race: raceName
       }, function(error, results) {
         $('[name="characterName"]').val('');
-        $('[name=race]').val(1);
+        $('[name=race]').val(0);
         $('#createCharacter').on('hidden.bs.modal', function() {
             Router.go('character', { _id: results });
           });
