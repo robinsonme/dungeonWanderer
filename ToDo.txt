@@ -1,8 +1,0 @@
-ToDo
-1.) Use a BS modal button to launch a create character window. On the character page if no character is found then have the create character modal launch. (DONE)
-2.) Determine if I want to do a Dragon Tavern Type game, idle type game, or a deeper RPG type game.
-3.) Honestly could combine all three types together. Dragon and deep RPG would be easy. Adding the idle elements would need to make sure were extremely slow growth idle.
-4.) Create a DB for characters. (DONE)
-5.) Create a DB for stats. Needs to have a createdBy CharacterID not just UserID.
-6.) Create a DB for equipment. Needs an equipped variable and a slot variable. Needs to have a createdBy CharacterID not just UserID.
-7.) Flesh out the createCharacter form. Gender, class, race.
