@@ -1,5 +1,6 @@
 Router.configure({
-  layoutTemplate: 'main'
+  layoutTemplate: 'main',
+  loadingTemplate: 'loading'
 });
 
 Router.route('/', {
@@ -19,7 +20,7 @@ Router.route('/character/:_id', {
     var currentCharacter = this.params._id;
     return Characters.findOne({ _id: currentCharacter });
   },
-  subscriptions: function(){
+  waitOn: function(){
     var currentCharacter = this.params._id;
     return Meteor.subscribe('stats', currentCharacter);
   }
@@ -101,7 +102,11 @@ if (Meteor.isClient) {
         Characters.remove({ _id: documentID });
       }
     }
-  })
+  });
+
+  Template.characters.onCreated(function(){
+    this.subscribe('characters');
+  });
 
   Template.navTopLeft.helpers({
     'activeIfTemplateIs': function(template) {
@@ -179,12 +184,13 @@ if (Meteor.isClient) {
 
 if (Meteor.isServer) {
   Meteor.publish('characters', function(){
-    var currentUser = Meteor.userId;
-    return Characters.find({ createdBy: currentUser });
+    var currentUser = this.userId;
+    console.log(currentUser);
+    return Characters.find({createdBy: currentUser});
   });
 
   Meteor.publish('stats', function(currentCharacter){
-    var currentUser = Meteor.userId;
+    var currentUser = this.userId;
     return Stats.find({ createdBy: userId, createdByCharacter: currentCharacter });
   });
 
