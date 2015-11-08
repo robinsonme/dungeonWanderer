@@ -21,8 +21,6 @@ iron:router
 twbs:bootstrap
 themeteorchef:jquery-validation
 ian:accounts-ui-bootstrap-3
-<<<<<<< Updated upstream
 insecure
 autopublish
-=======
->>>>>>> Stashed changes
+
