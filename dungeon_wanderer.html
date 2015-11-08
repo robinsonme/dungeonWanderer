@@ -56,7 +56,7 @@
 	<div class="col-md-offset-1">
 		<ul>
 		{{#each character}}
-			<li><a href="/character/{{_id}}">{{name}} - Level: {{level}} </a>  [<a href="#" class="delete-character">&times;</a>]</li>
+			<li><a href="/character/{{_id}}">{{name}}</a> - Level: {{level}} - Race: {{race}} - Gender: {{gender}}    [<a href="#" class="delete-character">&times;</a>]</li>
 		{{/each}}
 		</ul>
 		{{#if maxCharactersReached}}
@@ -75,7 +75,7 @@
 <template name="createCharacter">
 	<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#createCharacter">Create Character</button>
 	<div id="createCharacter" class="modal fade" role="dialog">
-			<div class="modal-dialog modal-lg">
+		<div class="modal-dialog modal-lg">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <button type="button" class="close" data-dismiss="modal">&times;</button>
@@ -85,18 +85,29 @@
 		      	<div class="modal-body">
 			    	<div class="form-group">
 				        <label class="control-label col-md-2">Character Name: </label>
-			        	<div class="col-md-6">
+				        <div class="col-md-6">
 			        		<input type="text" class="form-control" placeholder="Enter character name" name="characterName">
+		        		</div>
+			    	</div>
+			    	<div class="form-group">
+			    		<label for="race" class="control-label col-md-2">Race:</label>
+			    		<div class="col-md-4">
+				    		<select class="form-control" name="race">
+				    			<option>Human</option>
+				    			<option>Elf</option>
+				    			<option>Dwarf</option>
+				    			<option>Gnome</option>
+				    		</select>
 			    		</div>
 			    	</div>
 			    	<div class="form-group">
-			    		<label for="race">Race:</label>
-			    		<select class="form-control" name="race">
-			    			<option>Human</option>
-			    			<option>Elf</option>
-			    			<option>Dwarf</option>
-			    			<option>Gnome</option>
-			    		</select>
+			    		<label for="gender" class="control-label col-md-2">Gender:</label>
+			    		<div class="col-md-4">
+				    		<select class="form-control" name="gender">
+				    			<option>Male</option>
+				    			<option>Female</option>
+				    		</select>
+			    		</div>
 			    	</div>
 		      	</div>
 			    <div class="modal-footer">

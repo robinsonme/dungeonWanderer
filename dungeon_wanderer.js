@@ -70,37 +70,19 @@ if (Meteor.isClient) {
       event.preventDefault();
       var characterName = $('[name=characterName]').val();
       var race = $('[name=race]').val();
-      var currentUser = Meteor.userId();
-      switch(race) {
-        case 0:
-        default:
-          var raceName = "Human";
-          break;
-        case 1:
-          var raceName = "Elf";
-          break;
-        case 2: 
-          var raceName = "Dwarf";
-          break;
-        case 3: 
-          var raceName = "Gnome";
-          break;
-      };
-      Characters.insert({
-        name: characterName,
-        createdBy: currentUser,
-        createdAt: new Date(),
-        level: 1,
-        race: raceName
-      }, function(error, results) {
-        $('[name="characterName"]').val('');
-        $('[name=race]').val(0);
-        $('#createCharacter').on('hidden.bs.modal', function() {
-            Router.go('character', { _id: results });
-          });
-        $('#createCharacter').modal('hide');
-      });
-      
+      var gender = $('[name=gender').val();
+      Meteor.call('createNewCharacter', characterName, race, gender, function(error, results) {
+        if (error){
+          console.log(error.reason);
+        } else {
+          $('[name="characterName"]').val('');
+          $('[name=race]').val("Human");
+          $('#createCharacter').on('hidden.bs.modal', function() {
+              Router.go('character', { _id: results });
+            });
+          $('#createCharacter').modal('hide');
+        }
+    });
     }
   });
 
@@ -168,6 +150,24 @@ if (Meteor.isClient) {
   });
 }
 
-if (Meteor.isClient) {
-  
+if (Meteor.isServer) {
+  Meteor.methods({
+    'createNewCharacter': function(characterName, race, gender){
+      var currentUser = Meteor.userId();
+      var data = {
+        name: characterName,
+        race: race,
+        gender: gender,
+        createdBy: currentUser,
+        createdAt: new Date(),
+        level: 1
+      }
+
+      if(!currentUser){
+        throw new Meteor.Error("not-logged-in", "You're not logged in!!");
+      }
+
+      return Characters.insert(data);
+    }
+  });
 }
