@@ -18,6 +18,10 @@ Router.route('/character/:_id', {
   data: function(){
     var currentCharacter = this.params._id;
     return Characters.findOne({ _id: currentCharacter });
+  },
+  subscriptions: function(){
+    var currentCharacter = this.params._id;
+    return Meteor.subscribe('stats', currentCharacter);
   }
 });
 
@@ -59,6 +63,7 @@ Router.route('/contact', {
 });
 
 Characters = new Meteor.Collection('characters');
+Stats = new Meteor.Collection('stats');
 
 if (Meteor.isClient) {
   Accounts.ui.config({
@@ -138,6 +143,28 @@ if (Meteor.isClient) {
     }
   });
 
+  Template.statsTemp.helpers({
+    'stats': function(){
+      var currentCharacter = this._id;
+      var characterStats = Stats.findOne({ createdByCharacter: currentCharacter });
+      return characterStats;
+    },
+    'currency': function(){
+      var currentCharacter = this._id;
+      var characterStats = Stats.findOne({ createdByCharacter: currentCharacter });
+      var currency = characterStats.currency;
+      Meteor.call('currencyConversion', currency, function(error, results) {
+        if (error){
+          console.log(error.reason);
+        } else {
+          console.log(results);
+          console.log(currency);
+          return currency;
+        }
+      });
+    }
+  });
+
   Template.characterCount.helpers({
     'totalCharacters': function(){
       var currentUser = Meteor.userId();
@@ -151,6 +178,16 @@ if (Meteor.isClient) {
 }
 
 if (Meteor.isServer) {
+  Meteor.publish('characters', function(){
+    var currentUser = Meteor.userId;
+    return Characters.find({ createdBy: currentUser });
+  });
+
+  Meteor.publish('stats', function(currentCharacter){
+    var currentUser = Meteor.userId;
+    return Stats.find({ createdBy: userId, createdByCharacter: currentCharacter });
+  });
+
   Meteor.methods({
     'createNewCharacter': function(characterName, race, gender){
       var currentUser = Meteor.userId();
@@ -166,8 +203,63 @@ if (Meteor.isServer) {
       if(!currentUser){
         throw new Meteor.Error("not-logged-in", "You're not logged in!!");
       }
+      Characters.insert(data);
+      var characterId = Characters.findOne({ name: characterName });
+      Meteor.call('createCharacterStats', characterId._id);
+      return characterId._id;
+    },
 
-      return Characters.insert(data);
+    'createCharacterStats': function(characterId){
+      var currentUser = Meteor.userId();
+      var data = {
+        createdBy: currentUser,
+        createdByCharacter: characterId,
+        experience: 0,
+        expToNext: 10,
+        currentHealth: 10,
+        maxHealth: 10,
+        currentMana: 10,
+        maxMana: 10,
+        currency: 10
+      }
+
+      if(!currentUser) {
+        throw new Meteor.Error("not-logged-in", "You're not logged in!!");
+      }
+
+      Stats.insert(data);
+    },
+
+    'currencyConversion': function(currency){
+      var currencyAmount = "";
+      var silver = 100;
+      var gold = silver * 100;
+      var platinum = gold * 1000;
+      var electrum = platinum * 1000;
+      electrumAmount = Math.floor(currency/electrum);
+      currency = currency % electrum;
+      platinumAmount = Math.floor(currency/platinum);
+      currency = currency % platinum;
+      goldAmount = Math.floor(currency/gold);
+      currency = currency % gold;
+      silverAmount = Math.floor(currency/silver);
+      currency = currency % silver;
+      if(electrumAmount > 0){
+        currencyAmount = electrumAmount + "e " + platinumAmount + "p " + goldAmount + "g " + silverAmount + "s " + currency + "c";
+        return currencyAmount;
+      } else if (platinumAmount > 0) {
+        currencyAmount = platinumAmount + "p "+ goldAmount + "g " + silverAmount + "s " + currency + "c";
+        return currencyAmount;
+      } else if (goldAmount > 0) {
+        currencyAmount = goldAmount + "g " + silverAmount + "s " + currency + "c";
+        return currencyAmount;
+      } else if (silverAmount > 0) {
+        currencyAmount = silverAmount + "s " + currency + "c";
+        return currencyAmount;
+      } else {
+        currencyAmount = currency + "c";
+        return currencyAmount;
+      }
     }
   });
 }
