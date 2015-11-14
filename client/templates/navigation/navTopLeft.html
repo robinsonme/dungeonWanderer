@@ -1,0 +1,6 @@
+<template name="navTopLeft">
+	<li class="{{ activeIfTemplateIs 'home' }}"><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
+	{{#if currentUser}}
+		<li class="{{ activeIfTemplateIs 'characters' }}"><a href="{{pathFor route='characters'}}">{{currentUser.username}}'s Characters</a></li>
+	{{/if}}
+</template>

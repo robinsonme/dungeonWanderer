@@ -1,0 +1,15 @@
+<template name="characters">
+	<div class="col-md-offset-1">
+		<ul>
+		{{#each character}}
+			<li><a href="/character/{{_id}}">{{name}}</a> - Level: {{level}} - Race: {{race}} - Gender: {{gender}}    [<a href="#" class="delete-character">&times;</a>]</li>
+		{{/each}}
+		</ul>
+		{{#if maxCharactersReached}}
+			{{> createCharacter}}
+		{{/if}}
+		<p>
+			You have {{characterCount}} out of 10 characters.
+		</p>
+	</div>
+</template>

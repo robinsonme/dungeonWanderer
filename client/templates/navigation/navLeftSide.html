@@ -1,0 +1,10 @@
+<template name="navLeftSide">
+	<div class="leftSideNav col-md-2">
+  		<ul class="nav nav-pills nav-stacked" align="center">
+  			<li class="{{ activeIfTemplateIs 'character' }}"><a href="/character/{{_id}}">{{name}}</a></li>
+    		<li class="{{ activeIfTemplateIs 'inventory' }}"><a href="{{pathFor route='inventory'}}">Inventory</a></li>
+    		<li class="{{ activeIfTemplateIs 'abilities' }}"><a href="{{pathFor route='abilities'}}">Abilities</a></li>
+    		<li class="{{ activeIfTemplateIs 'companions' }}"><a href="{{pathFor route='companions'}}">Companions</a></li>
+  		</ul>
+	</div>
+</template>

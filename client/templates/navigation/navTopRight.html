@@ -1,0 +1,5 @@
+<template name="navTopRight">
+	<li class="{{ activeIfTemplateIs 'about' }}"><a href="{{pathFor route='about'}}">About</a></li>
+	<li class="{{ activeIfTemplateIs 'contact' }}"><a href="{{pathFor route='contact'}}">Contact Us</a></li>
+	{{> loginButtons}}
+</template>

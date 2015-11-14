@@ -45,7 +45,7 @@ if (Meteor.isClient) {
 
 
 
-  
+
 
   Template.characters.helpers({
     'character': function(){
@@ -84,30 +84,9 @@ if (Meteor.isClient) {
       });
     }
   });
-
-  Template.characterCount.helpers({
-    'totalCharacters': function(){
-      var currentUser = Meteor.userId();
-      return Characters.find({ createdBy: currentUser }).count();
-    },
-    'maxCharacters': function(){
-      var currentUser = Meteor.userId();
-      // Setup for a later max number of characters and a way to increase that.
-    }
-  });
 }
 
 if (Meteor.isServer) {
-  Meteor.publish('characters', function(){
-    var currentUser = this.userId;
-    console.log(currentUser);
-    return Characters.find({createdBy: currentUser});
-  });
-
-  Meteor.publish('stats', function(currentCharacter){
-    var currentUser = this.userId;
-    return Stats.find({ createdBy: userId, createdByCharacter: currentCharacter });
-  });
 
   Meteor.methods({
     'createNewCharacter': function(characterName, race, gender){
@@ -124,7 +103,10 @@ if (Meteor.isServer) {
       if(!currentUser){
         throw new Meteor.Error("not-logged-in", "You're not logged in!!");
       }
+
       Characters.insert(data);
+      Users.update({_id: currentUser}, {$inc: {characterCount: 1}});
+
       var characterId = Characters.findOne({ name: characterName });
       Meteor.call('createCharacterStats', characterId._id);
       return characterId._id;
