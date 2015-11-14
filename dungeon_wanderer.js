@@ -1,75 +1,8 @@
-Router.configure({
-  layoutTemplate: 'main',
-  loadingTemplate: 'loading'
-});
 
-Router.route('/', {
-  name: 'home',
-  template: 'home'
-});
-
-Router.route('/characters', {
-  name: 'characters',
-  template: 'characters'
-});
-
-Router.route('/character/:_id', {
-  name: 'character',
-  template: 'character',
-  data: function(){
-    var currentCharacter = this.params._id;
-    return Characters.findOne({ _id: currentCharacter });
-  },
-  waitOn: function(){
-    var currentCharacter = this.params._id;
-    return Meteor.subscribe('stats', currentCharacter);
-  }
-});
-
-Router.route('/character/:_id/inventory', {
-  name: 'inventory',
-  template: 'inventory',
-  data: function(){
-    var currentCharacter = this.params._id;
-    return Characters.findOne({ _id: currentCharacter });
-  }
-});
-
-Router.route('/character/:_id/abilities', {
-  name: 'abilities',
-  template: 'abilities',
-  data: function(){
-    var currentCharacter = this.params._id;
-    return Characters.findOne({ _id: currentCharacter });
-  }
-});
-
-Router.route('/character/:_id/companions', {
-  name: 'companions',
-  template: 'companions',
-  data: function(){
-    var currentCharacter = this.params._id;
-    return Characters.findOne({ _id: currentCharacter });
-  }
-});
-
-Router.route('/about', {
-  name: 'about',
-  template: 'about'
-});
-
-Router.route('/contact', {
-  name: 'contact',
-  template: 'contact'
-});
-
-Characters = new Meteor.Collection('characters');
 Stats = new Meteor.Collection('stats');
 
 if (Meteor.isClient) {
-  Accounts.ui.config({
-    passwordSignupFields: 'USERNAME_AND_EMAIL'
-  });
+
 
   Template.createCharacter.events({
     'submit form': function(event){
@@ -108,29 +41,11 @@ if (Meteor.isClient) {
     this.subscribe('characters');
   });
 
-  Template.navTopLeft.helpers({
-    'activeIfTemplateIs': function(template) {
-      var currentRoute = Router.current();
-      return currentRoute &&
-        template === currentRoute.lookupTemplate() ? 'active' : '';
-    }
-  });
 
-  Template.navTopRight.helpers({
-    'activeIfTemplateIs': function(template) {
-      var currentRoute = Router.current();
-      return currentRoute &&
-        template === currentRoute.lookupTemplate() ? 'active' : '';
-    }
-  });
 
-  Template.navLeftSide.helpers({
-    'activeIfTemplateIs': function(template) {
-      var currentRoute = Router.current();
-      return currentRoute &&
-        template === currentRoute.lookupTemplate() ? 'active' : '';
-    }
-  });
+
+
+  
 
   Template.characters.helpers({
     'character': function(){

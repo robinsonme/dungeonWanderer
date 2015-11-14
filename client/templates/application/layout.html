@@ -1,0 +1,14 @@
+<template name="layout">
+	{{> navigation}}
+	{{#if currentUser}}
+	{{else}}
+		<div class="row">
+			<h2 align="center" class="col-md-12">Welcome to Dungeon Wanderer!</h2>
+		</div>
+	{{/if}}
+	{{> yield}}
+
+	<br />
+	<hr class="col-md-12" />
+	<p align="center" class="col-md-12">Copyright &copy; Dungeon Wanderer, 2015.</p>
+</template>

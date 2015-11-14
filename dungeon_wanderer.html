@@ -1,36 +1,4 @@
-<template name="main">
-	{{> navigation}}
-	{{#if currentUser}}
-	{{else}}
-		<div class="row">
-			<h2 align="center" class="col-md-12">Welcome to Dungeon Wanderer!</h2>
-		</div>
-	{{/if}}
-	{{> yield}}
 
-	<br />
-	<hr class="col-md-12" />
-	<p align="center" class="col-md-12">Copyright &copy; Dungeon Wanderer, 2015.</p>
-</template>
-
-<template name="loading">
-	<p>Loading...</p>
-</template>
-
-<template name="navigation">
-	<nav class="navbar navbar-inverse">
-		<div class="container-fluid">
-			<div>
-				<ul class="nav navbar-nav">
-					{{> navTopLeft}}
-				</ul>
-				<ul class="nav navbar-nav navbar-right">
-					{{> navTopRight}}
-				</ul>
-			</div>
-		</div>
-	</nav>
-</template>
 
 <template name="navTopLeft">
 	<li class="{{ activeIfTemplateIs 'home' }}"><a href="{{pathFor route='home'}}"><span class="glyphicon glyphicon-home"></span> Home</a></li>
