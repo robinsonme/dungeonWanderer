@@ -1,0 +1,16 @@
+<template name="statsTemplate">
+	{{#if Template.subscriptionsReady}}
+		<dl class="stats col-md-4">
+			<dt>Stats:</dt>
+			<dd class="col-md-offset-1">Level: {{level}}</dd>
+			<dd class="col-md-offset-1">Experience: {{stats.experience}}</dd>
+			<dd class="col-md-offset-1">Experience to Next Level: {{stats.expToNext}}</dd>
+			<dd class="col-md-offset-1">Race: {{race}}</dd>
+			<dd class="col-md-offset-1">Health: {{stats.currentHealth}}/{{stats.maxHealth}}</dd>
+			<dd class="col-md-offset-1">Mana: {{stats.currentMana}}/{{stats.maxMana}}</dd>
+			<dd class="col-md-offset-1">Attack: {{stats.attack}}</dd>
+			<dd class="col-md-offset-1">Defense: {{stats.defense}}</dd>
+			<dd class="col-md-offset-1">Currency: {{currency stats.currency}}</dd>
+		</dl>
+	{{/if}}
+</template>

@@ -5,7 +5,9 @@
 			<li><a href="/character/{{_id}}">{{name}}</a> - Level: {{level}} - Race: {{race}} - Gender: {{gender}}    [<a href="#" class="delete-character">&times;</a>]</li>
 		{{/each}}
 		</ul>
+
 		{{#if maxCharactersReached}}
+		{{else}}
 			{{> createCharacter}}
 		{{/if}}
 		<p>

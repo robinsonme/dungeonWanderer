@@ -1,6 +1,7 @@
 <template name="navLeftSide">
 	<div class="leftSideNav col-md-2">
   		<ul class="nav nav-pills nav-stacked" align="center">
+				<li class="{{ activeIfTemplateIs 'dungeon' }}"><a href="{{pathFor route='dungeon'}}">Dungeon</a></li>
   			<li class="{{ activeIfTemplateIs 'character' }}"><a href="/character/{{_id}}">{{name}}</a></li>
     		<li class="{{ activeIfTemplateIs 'inventory' }}"><a href="{{pathFor route='inventory'}}">Inventory</a></li>
     		<li class="{{ activeIfTemplateIs 'abilities' }}"><a href="{{pathFor route='abilities'}}">Abilities</a></li>
