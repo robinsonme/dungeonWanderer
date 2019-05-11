@@ -9,14 +9,15 @@
   			<dd class="col-md-offset-1">Defense: {{defense}}</dd>
       {{/with}}
 		</dl>
-      <dl class="enemyStats col-md-4">
-        {{#with enemy}}
-    			<dt>{{name}}:</dt>
-    			<dd class="col-md-offset-1">Health: {{stats.hp}}</dd>
-    			<dd class="col-md-offset-1">Mana: {{stats.mana}}</dd>
-    			<dd class="col-md-offset-1">Attack: {{stats.attack}}</dd>
-    			<dd class="col-md-offset-1">Defense: {{stats.defense}}</dd>
-        {{/with}}
-  		</dl>
+    <dl class="enemyStats col-md-3">
+      {{#with enemy}}
+  			<dt>{{name}}:</dt>
+  			<dd class="col-md-offset-1">Health: {{stats.hp}}</dd>
+  			<dd class="col-md-offset-1">Mana: {{stats.mana}}</dd>
+  			<dd class="col-md-offset-1">Attack: {{stats.attack}}</dd>
+  			<dd class="col-md-offset-1">Defense: {{stats.defense}}</dd>
+      {{/with}}
+		</dl>
+    <dl id="fight" class="progress-bar-animated bg-success" style="width:10%"></dl>
   </div>
 </template>

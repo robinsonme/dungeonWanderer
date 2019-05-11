@@ -21,3 +21,22 @@ Template.battle.onCreated(function() {
   Meteor.subscribe('stats', character._id);
   Meteor.subscribe('enemies');
 });
+
+function newFight() {
+  var elem = document.getElementById('fight');
+  var width = 1;
+  var id = setInterval(frame, 10);
+  function frame() {
+    if (width >= 100) {
+      clearInterval(id);
+      gameData.gold += gameData.goldPerClick
+      update("goldOnHand", format(gameData.gold, "scientific") + " Gold on Hand")
+      document.getElementById('exploreBtn').disabled = false;
+      elem.style.width = width + "%";
+    } else {
+      width++;
+      elem.style.width = width + "%";
+      document.getElementById('fightBtn').disabled = true;
+    }
+  }
+}
